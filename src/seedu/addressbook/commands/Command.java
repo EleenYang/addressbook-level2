@@ -60,6 +60,12 @@ public class Command {
         return relevantPersons.get(getTargetIndex() - DISPLAYED_INDEX_OFFSET);
     }
 
+    /**
+     * Extract the target person for modification.
+     *
+     * @throws IndexOutOfBoundsException if the target index is out of bounds of the last viewed listing.
+     */
+
     public int getTargetIndex() {
         return targetIndex;
     }

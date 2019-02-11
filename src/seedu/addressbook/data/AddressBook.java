@@ -5,6 +5,9 @@ import seedu.addressbook.data.person.ReadOnlyPerson;
 import seedu.addressbook.data.person.UniquePersonList;
 import seedu.addressbook.data.person.UniquePersonList.DuplicatePersonException;
 import seedu.addressbook.data.person.UniquePersonList.PersonNotFoundException;
+import seedu.addressbook.data.tag.Tag;
+
+import java.util.Set;
 
 /**
  * Represents the entire address book. Contains the data of the address book.
@@ -36,6 +39,16 @@ public class AddressBook {
      */
     public void addPerson(Person toAdd) throws DuplicatePersonException {
         allPersons.add(toAdd);
+    }
+
+    /**
+     * Update the tags of a person.
+     *
+     * @throws PersonNotFoundException if no such Person could be found.
+     */
+    public void updateTagPerson(int idx, Set<Tag> replacement) throws PersonNotFoundException{
+        Person targetPerson = allPersons.getPersonModifiable(idx);
+        targetPerson.setTags(replacement);
     }
 
     /**

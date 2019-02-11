@@ -11,17 +11,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import seedu.addressbook.commands.AddCommand;
-import seedu.addressbook.commands.ClearCommand;
-import seedu.addressbook.commands.Command;
-import seedu.addressbook.commands.DeleteCommand;
-import seedu.addressbook.commands.ExitCommand;
-import seedu.addressbook.commands.FindCommand;
-import seedu.addressbook.commands.HelpCommand;
-import seedu.addressbook.commands.IncorrectCommand;
-import seedu.addressbook.commands.ListCommand;
-import seedu.addressbook.commands.ViewAllCommand;
-import seedu.addressbook.commands.ViewCommand;
+import seedu.addressbook.commands.*;
 import seedu.addressbook.data.exception.IllegalValueException;
 
 /**
@@ -42,6 +32,9 @@ public class Parser {
                     + "(?<tagArguments>(?: t/[^/]+)*)"); // variable number of tags
 
 
+    public static final Pattern PERSON_UPDATE_TAG_FORMAT =
+            Pattern.compile("(?<targetIndex>.+)"
+                    + "(?<tagArguments>(?: t/[^/]+)*)");
     /**
      * Signals that the user input could not be parsed.
      */
@@ -171,6 +164,28 @@ public class Parser {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
         } catch (NumberFormatException nfe) {
             return new IncorrectCommand(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+    }
+
+    /**
+     * Parses arguments in the context of updating tags.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareUpdateTag(String args){
+        final Matcher matcher = PERSON_UPDATE_TAG_FORMAT.matcher(args.trim());
+        if (!matcher.matches()) {
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateTagCommand.MESSAGE_USAGE));
+        }
+        try {
+            int targetIndex = Integer.parseInt(matcher.group("targetIndex"));
+            Set<String> tags = getTagsFromArgs(matcher.group("tagArguments"));
+            return new UpdateTagCommand(targetIndex, tags);
+        } catch (NumberFormatException nfe) {
+            return new IncorrectCommand(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        } catch (IllegalValueException ive) {
+            return new IncorrectCommand(ive.getMessage());
         }
     }
 
