@@ -42,7 +42,7 @@ public class UpdateTagCommand extends Command{
     @Override
     public CommandResult execute() {
         try {
-            addressBook.updateTagPerson(getTargetIndex() - DISPLAYED_INDEX_OFFSET, tags);
+            addressBook.updateTagPerson(getTargetIndex(), tags);
             final ReadOnlyPerson target = getTargetPerson();
             return new CommandResult(String.format(MESSAGE_UPDATE_PERSON_SUCCESS, target));
 

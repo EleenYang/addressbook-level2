@@ -139,6 +139,13 @@
   # listing indexes get updated on next request
   delete 1
   list
+##########################################################
+# test updateTag command
+##########################################################
+
+  # shoulf update the tag of the first visible person
+  updateTag 1 t/family
+  list
 
 ##########################################################
 # test clear command

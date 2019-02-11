@@ -33,7 +33,7 @@ public class Parser {
 
 
     public static final Pattern PERSON_UPDATE_TAG_FORMAT =
-            Pattern.compile("(?<targetIndex>.+)"
+            Pattern.compile("(?<targetIndex>\\d+)"
                     + "(?<tagArguments>(?: t/[^/]+)*)");
     /**
      * Signals that the user input could not be parsed.
@@ -80,6 +80,9 @@ public class Parser {
 
         case ListCommand.COMMAND_WORD:
             return new ListCommand();
+
+         case UpdateTagCommand.COMMAND_WORD:
+            return prepareUpdateTag(arguments);
 
         case ViewCommand.COMMAND_WORD:
             return prepareView(arguments);
@@ -179,7 +182,8 @@ public class Parser {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdateTagCommand.MESSAGE_USAGE));
         }
         try {
-            int targetIndex = Integer.parseInt(matcher.group("targetIndex"));
+            String indexStr = matcher.group("targetIndex");
+            int targetIndex = Integer.parseInt(indexStr);
             Set<String> tags = getTagsFromArgs(matcher.group("tagArguments"));
             return new UpdateTagCommand(targetIndex, tags);
         } catch (NumberFormatException nfe) {

@@ -9,6 +9,8 @@ import seedu.addressbook.data.tag.Tag;
 
 import java.util.Set;
 
+import static seedu.addressbook.ui.TextUi.DISPLAYED_INDEX_OFFSET;
+
 /**
  * Represents the entire address book. Contains the data of the address book.
  */
@@ -47,8 +49,17 @@ public class AddressBook {
      * @throws PersonNotFoundException if no such Person could be found.
      */
     public void updateTagPerson(int idx, Set<Tag> replacement) throws PersonNotFoundException{
-        Person targetPerson = allPersons.getPersonModifiable(idx);
+        Person targetPerson = allPersons.getPersonModifiable(idx - DISPLAYED_INDEX_OFFSET);
         targetPerson.setTags(replacement);
+    }
+
+    /**
+     * Get the person info by index.
+     *
+     * @throws PersonNotFoundException if no such Person could be found.
+     */
+    public String getPersonByIndex(int idx) throws PersonNotFoundException{
+        return allPersons.getPersonModifiable(idx - DISPLAYED_INDEX_OFFSET).toString();
     }
 
     /**
