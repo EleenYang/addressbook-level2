@@ -111,6 +111,22 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
+== Updating a person's tags: `updateTag`
+
+updates a person's tag in the address book. +
+Format: `updateTag INDEX [t/TAG]...`
+
+****
+Words in `UPPER_CASE` are the parameters, items in `SQUARE_BRACKETS` are optional,
+items with `...` after them can have multiple instances. Order of parameters are fixed.
+
+Persons can have any number of tags (including 0).
+****
+
+Examples:
+
+* `update 1 t/family`
+
 == View non-private details of a person : `view`
 
 Displays the non-private details of the specified person. +
